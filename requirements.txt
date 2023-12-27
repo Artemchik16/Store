@@ -1,0 +1,15 @@
+django==4.2
+djangorestframework
+django-cors-headers
+django-filter
+django-jazzmin
+django-crum
+django-environ
+djangorestframework-simplejwt
+djoser==2.1.0
+drf-spectacular==0.25.1
+
+black
+isort
+pillow
+psycopg2-binary
