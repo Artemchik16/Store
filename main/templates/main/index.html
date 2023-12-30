@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
+{% load goods_tags %}
 {% block title %} Главная страница {% endblock title %}
 
 {% block content %}
@@ -10,22 +10,20 @@
         <!-- Каталог и корзина с фиксированным расположением на странице -->
         <div class="row mt-1 position-fixed z-3">
             <!-- Каталог -->
-            <div class="dropdown mb-2">
-                <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
+            <div class="mb-2">
+
+                <a href="{% url 'goods:catalog_page' %}">
+                <button class="btn btn-secondary btn-dark" type="button"
                         aria-expanded="false">
                     Каталог
                     <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
                          height="16">
                 </button>
-                <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Все товары</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Мебель</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Украшения & Аксессуары</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Для дома</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Бытовая техника</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Одежда</a></li>
-                    <li><a class="dropdown-item text-white" href="goods/catalog.html">Разное</a></li>
-                </ul>
+                </a>
+
+                <!--       category         -->
+
+
             </div>
             <!-- Значек корзины, вызывает модальное окно -->
             <div>

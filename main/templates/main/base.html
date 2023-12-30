@@ -1,4 +1,6 @@
 {% load static %}
+{% load goods_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +58,11 @@
                             <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
                             <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
                             </li>
-                            <li><a class="dropdown-item  text-white" href="#">Админ панель</a></li>
+
+                            {% if user.is_superuser or user.is_staff %}
+                            <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}">Админ панель</a></li>
+                            {% endif %}
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

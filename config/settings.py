@@ -22,6 +22,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
+# default apps
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -31,14 +32,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+# modern admin
 INSTALLED_APPS.insert(0, "jazzmin")
 
-INSTALLED_APPS.extend(
-    [
-        "api_v1.apps.ApiV1Config",
-        "main.apps.MainConfig",
-    ]
-)
+# my apps
+INSTALLED_APPS += [
+    "api_v1.apps.ApiV1Config",
+    "main.apps.MainConfig",
+    "goods.apps.GoodsConfig",
+]
+
+#  other apps
+INSTALLED_APPS += [
+    "debug_toolbar",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -48,6 +55,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # debug toolbar
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -116,7 +125,48 @@ STATICFILES_DIRS = [
 ]
 
 # Media files
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# debug-toolbar
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
+
+# jazzmin config ui
+JAZZMIN_UI_TWEAKS = {
+    "theme": "litera",
+}
+
+# JAZZMIN_SETTINGS = {
+#     "topmenu_links": [
+#         {
+#             "name": "Админ-панель",
+#             "url": "admin:index",
+#             "permissions": ["auth.view_user"],
+#         },
+#         {
+#             "name": "Главная",
+#             "url": "main:main_page",
+#             "new_window": True,
+#             "permissions": ["auth.view_user"],
+#         },
+#         {
+#             "name": "Партнерка",
+#             "url": "partner:partner_page",
+#             "new_window": True,
+#             "permissions": ["auth.view_user"],
+#         },
+#     ],
+#     "usermenu_links": [
+#         {
+#             "name": "Открыть сайт",
+#             "url": "main:main_page",
+#             "permissions": ["auth.view_user"],
+#         },
+#     ],
+# }

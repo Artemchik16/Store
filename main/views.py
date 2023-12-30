@@ -1,5 +1,7 @@
 from django.shortcuts import HttpResponse, render
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
+
+from goods import models as goods_models
 
 
 class MainPage(TemplateView):
