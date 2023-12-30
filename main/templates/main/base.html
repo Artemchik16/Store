@@ -70,8 +70,9 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Найти товар" aria-label="Search">
+                <form class="d-flex" role="search" action="{% url 'goods:search' %}" method="GET">
+                    <input class="form-control me-2" type="search"
+                           {% if request.GET.q %} placeholder="{{ request.GET.q }}" {% else %} placeholder="Найти товар" {% endif %} aria-label="Search" name="q">
                     <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
                 </form>
             </div>

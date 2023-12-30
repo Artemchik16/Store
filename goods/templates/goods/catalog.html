@@ -119,11 +119,13 @@
                             Фильтры
                         </button>
 
-                        <form action="" method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        <form {% if request.GET.q %} action="{% url 'goods:search' %}" {% else %} action="" {% endif %}method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
                             <div class="form-check text-white mx-3">
                                 <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault"
                                        value="True" {% if request.GET.on_sale %} checked {% endif %}>
-<!--                                <input type="hidden" name="q" value="True">-->
+                                {% if request.GET.q %}
+                                <input type="hidden" name="q" value="{{ request.GET.q }}">
+                                {% endif %}
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Товары по акции
                                 </label>
@@ -154,6 +156,14 @@
                         </form>
                     </div>
 
+                    {% if request.GET.q %}
+                    <h3 class="mt-4">Результаты поиска по запросу {{ request.GET.q|capfirst }}</h3>
+                    {% endif %}
+
+                    {% if not products %}
+                    <h3 class="mt-4">Ничего не найдено</h3>
+                    {% endif %}
+
                     <!-- Карта товара -->
                     {% for product in products %}
                     {% if product.is_active %}
@@ -178,7 +188,15 @@
 
 
                                 <a href="{% url 'goods:product_page' product_slug=product.slug %}">
-                                    <p class="card-title">{{ product.name|capfirst|truncatechars:30 }}</p>
+                                    <p class="card-title">
+                                        {% autoescape off %}
+                                        {% if product.name_headline %}
+                                            {{ product.name_headline }}
+                                        {% else %}
+                                            {{ product.name|capfirst|truncatechars:30 }}
+                                        {% endif %}
+                                        {% endautoescape %}
+                                    </p>
                                 </a>
 
 
