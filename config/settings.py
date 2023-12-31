@@ -41,6 +41,7 @@ INSTALLED_APPS += [
     "api_v1.apps.ApiV1Config",
     "main.apps.MainConfig",
     "goods.apps.GoodsConfig",
+    "users.apps.UsersConfig",
 ]
 
 #  other apps
@@ -125,12 +126,19 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
 
+
+# default redirect
+LOGOUT_REDIRECT_URL = "users:login"
+LOGIN_REDIRECT_URL = "goods:catalog_page"
+
+
 # Media files
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = "users.User"
 
 # debug-toolbar
 INTERNAL_IPS = [
