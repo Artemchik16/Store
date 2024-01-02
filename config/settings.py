@@ -131,7 +131,7 @@ STATICFILES_DIRS = [
 # default redirect
 LOGOUT_REDIRECT_URL = "users:login"
 LOGIN_REDIRECT_URL = "goods:catalog_page"
-LOGIN_URL = 'users:login'
+LOGIN_URL = "users:login"
 
 # Media files
 MEDIA_URL = "media/"

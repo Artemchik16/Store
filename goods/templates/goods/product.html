@@ -1,8 +1,15 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load goods_tags %}
+{% load carts_tags %}
+
+
 {% block title %} Описание товара  {% endblock title %}
+
 {% block content %}
+
+{% user_carts request as carts %}
+
 <section>
     <div class="container">
         <!-- Каталог и корзина с фиксированным расположением на странице -->
@@ -28,7 +35,7 @@
                         aria-expanded="false">
                     <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24"
                          height="24">
-                    <span>0</span>
+                    <span id="goods-in-cart-count">{{ carts.total_quantity }}</span>
                 </button>
             </div>
             <!-- Разметка модального окна корзины -->
@@ -43,57 +50,17 @@
                         <div class="modal-body">
                             <h3 class="text-center mb-4">Корзина</h3>
                             <div class="container" id="cart-items-container">
+
                                 <!-- Разметка корзины -->
-                                <div class="card mb-3 text-bg-light shadow-lg">
-                                    <div class="card-header">
-                                        <h5 class="card-title">Товар</h5>
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <div class="row text-center">
-                                                <div class="col p-0">
-                                                    <div class="input-group">
-                                                            <span class="input-group-btn">
-                                                                <button type="button"
-                                                                        class="btn btn-dark btn-sm decrement"
-                                                                        data-cart-id=""
-                                                                        data-cart-change-url="">-</button>
-                                                            </span>
-                                                        <input type="text" class="form-control number" value="1"
-                                                               readonly>
-                                                        <span class="input-group-btn">
-                                                                <button type="button"
-                                                                        class="btn btn-dark btn-sm increment"
-                                                                        data-cart-id=""
-                                                                        data-cart-change-url="">+</button>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col p-0">
-                                                    <p>x 100.00 = </p>
-                                                </div>
-                                                <div class="col p-0"><strong>100.00 $</strong></div>
-                                                <div class="col p-0">
-                                                    <a href="#" class="remove-from-cart" data-cart-id="">
-                                                        <img class="mx-1" src="../deps/icons/trash3-fill.svg"
-                                                             alt="Catalog Icon" width="16" height="16">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card mb-3 shadow-lg">
-                                    <div class="card-footer">
-                                        <p class="float-left">Итого <strong>1</strong> товар(а) на сумму</p>
-                                        <h4 class="float-left"><strong>100.00 $</strong></h4>
-                                    </div>
-                                </div>
+                                {% include 'carts/includes/included_cart.html'%}
                                 <!-- Закончилась разметка корзины -->
+
                             </div>
+                            {% if carts %}
                             <a class="btn btn-dark" href="../orders/create_order.html">
                                 Оформить заказ
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -159,7 +126,13 @@
                             <h5 class="card-title">{{ product.name }}</h5>
                             <p class="card-text">{{ product.description }}</p>
                             <p class="card-text">Всего товаров в категории {{ product.category.name }} - {{ total_products_in_category }}</p>
-                            <a href="#" class="btn btn-dark add-to-cart">Добавить в корзину</a>
+
+                            <a href="{% url 'carts:cart_add' %}"
+                               class="btn btn-dark add-to-cart"
+                                data-product-id="{{ product.id }}">
+                                {% csrf_token %}
+                                Добавить в корзину</a>
+
                         </div>
                     </div>
                 </div>

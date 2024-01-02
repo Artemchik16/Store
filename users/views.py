@@ -12,7 +12,7 @@ from django.views.generic import FormView, TemplateView
 from users.forms import LoginForm, ProfileForm, RegistrationForm
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name="dispatch")
 class ProfilePage(View):
     template_name = "users/profile.html"
 
@@ -73,3 +73,7 @@ class RegistrationPage(FormView):
         )
 
         return super().form_valid(form)
+
+
+class CartPage(TemplateView):
+    template_name = "users/cart.html"

@@ -44,7 +44,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link  text-white" href="carts/cart.html">Корзина</a>
+                        <a class="nav-link  text-white" href="{% url 'users:cart' %}">Корзина</a>
                     </li>
 
                     {% if not user.is_authenticated %}
@@ -60,7 +60,7 @@
                             Мой профиль
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
+                            <li><a class="dropdown-item  text-white" href="{% url 'users:cart' %}">Корзина</a></li>
                             <li><a class="dropdown-item  text-white" href="{% url 'users:profile' %}">Личный кабинет</a>
                             </li>
 
@@ -100,7 +100,7 @@
     </div>
 </footer>
 <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
-<script src="{% static 'deps/js/jquery-events.js' %}"></script>
+
 <script src="{% static 'deps/js/jquery-ajax.js' %}"></script>
 <script src="{% static 'deps/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
 </body>

@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load carts_tags %}
+{% block title %} Корзина {% endblock title %}
+
+{% block content %}
+{% user_carts request as carts %}
+
+    <section>
+        <div class="container">
+            <!-- Каталог и корзина с фиксированным расположением на странице -->
+            <div class="row mt-1 position-fixed z-3">
+                <!-- Каталог -->
+
+                <a href="{% url 'goods:catalog_page' %}">
+                <button class="btn btn-secondary btn-dark" type="button"
+                        aria-expanded="false">
+                    Каталог
+                    <img class="mx-1" src="{% static 'deps/icons/grid-fill.svg' %}" alt="Catalog Icon" width="16"
+                         height="16">
+                </button>
+                </a>
+
+            </div>
+        </div>
+        <!-- Контент -->
+        <div class="container">
+            <div class="row mt-1">
+                <div class="col-lg-2">
+                    <!-- Пустой блок на усмотрение -->
+                </div>
+                <div class="col-lg-10">
+                    <!-- Контент на странице -->
+                    <div class="row">
+                        <div class="container mt-5">
+                            <div class="row justify-content-center">
+                                <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                                    <h3 class="text-center mb-4">Корзина</h3>
+                                    <div class="container" id="cart-items-container">
+                                        <!-- Разметка корзины -->
+                                        {% include 'carts/includes/included_cart.html'%}
+                                        <!-- Закончилась разметка корзины -->
+                                    </div>
+                                    {% if carts %}
+                                    <a class="btn btn-dark" href="../orders/create_order.html">
+                                        Оформить заказ
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
