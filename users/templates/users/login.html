@@ -104,6 +104,7 @@
     <div class="container">
         <div class="row mt-1">
             <div class="col-lg-2">
+                {% include "main/notifications.html" %}
                 <!-- Пустой блок на усмотрение -->
             </div>
             <div class="col-lg-10">
@@ -116,7 +117,6 @@
 
                                 <form method="POST">
                                     {% csrf_token %}
-
                                     <div class="mb-3">
                                         <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
                                         {{ form.username }}

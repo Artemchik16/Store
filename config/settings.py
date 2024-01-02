@@ -42,6 +42,7 @@ INSTALLED_APPS += [
     "main.apps.MainConfig",
     "goods.apps.GoodsConfig",
     "users.apps.UsersConfig",
+    "carts.apps.CartsConfig",
 ]
 
 #  other apps
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "ru"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Almaty"
 
 USE_I18N = True
 
@@ -130,7 +131,7 @@ STATICFILES_DIRS = [
 # default redirect
 LOGOUT_REDIRECT_URL = "users:login"
 LOGIN_REDIRECT_URL = "goods:catalog_page"
-
+LOGIN_URL = 'users:login'
 
 # Media files
 MEDIA_URL = "media/"
