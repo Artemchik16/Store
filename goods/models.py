@@ -97,7 +97,7 @@ class Products(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('goods:product_page', kwargs={'product_slug': self.slug})
+        return reverse("goods:product_page", kwargs={"product_slug": self.slug})
 
     def display_id(self):
         return f"{self.pk:05}"

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
+from django.db.models import Prefetch
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -10,6 +11,7 @@ from django.views import View
 from django.views.generic import FormView, TemplateView
 
 from carts.models import Cart
+from orders.models import Order, OrderItem
 from users.forms import LoginForm, ProfileForm, RegistrationForm
 
 
@@ -19,8 +21,13 @@ class ProfilePage(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
+
+            orders = Order.objects.filter(user=request.user).prefetch_related(
+                Prefetch('orderitem_set', queryset=OrderItem.objects.select_related('product'))).order_by(
+                '-created_timestamp')
+
             form = ProfileForm(instance=request.user)
-            context = {"form": form}
+            context = {"form": form, 'orders': orders}
             return render(request, template_name=self.template_name, context=context)
         # else:
         #     return redirect("users:login")
@@ -41,16 +48,15 @@ class ProfilePage(View):
 
 
 class LoginPage(View):
-
     def get(self, request, *args, **kwargs):
         form = LoginForm()
-        return render(request, 'users/login.html', context={'form': form})
+        return render(request, "users/login.html", context={"form": form})
 
     def post(self, request, *args, **kwargs):
         form = LoginForm(data=request.POST)
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
+            username = request.POST["username"]
+            password = request.POST["password"]
             user = authenticate(username=username, password=password)
             session_key = request.session.session_key
             if user:
@@ -59,12 +65,12 @@ class LoginPage(View):
 
                 if session_key:
                     Cart.objects.filter(session_key=session_key).update(user=user)
-                return HttpResponseRedirect(reverse('users:profile'))
+                return HttpResponseRedirect(reverse("users:profile"))
             else:
                 messages.error(self.request, "Неверное имя пользователя или пароль.")
-                return render(request, 'users/login.html', context={'form': form})
+                return render(request, "users/login.html", context={"form": form})
         else:
-            return render(request, 'users/login.html', context={'form': form})
+            return render(request, "users/login.html", context={"form": form})
 
 
 @method_decorator(login_required, name="dispatch")

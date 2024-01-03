@@ -13,13 +13,13 @@ class CartAdmin(admin.ModelAdmin):
     def user_display(self, obj):
         if obj.user:
             return str(obj.user)
-        return 'Анонимный пользователь'
+        return "Анонимный пользователь"
 
     user_display.short_description = "Имя пользователя"
 
 
 class CartTabularAdmin(admin.TabularInline):
     model = Cart
-    fields = ('product', 'quantity', 'created_timestamp')
-    readonly_fields = ('created_timestamp',)
+    fields = ("product", "quantity", "created_timestamp")
+    readonly_fields = ("created_timestamp",)
     extra = 2
