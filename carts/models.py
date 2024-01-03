@@ -44,8 +44,9 @@ class Cart(models.Model):
     objects = CartQueryset().as_manager()
 
     def __str__(self):
-        username = self.user.full_name if self.user.full_name else self.user.username
-        return f"{username} | {self.product.name} | {self.quantity} шт"
+        if self.user:
+            return f"{self.user.username} | {self.product.name} | {self.quantity} шт"
+        return f"Анонимный пользователь | {self.product.name} | {self.quantity} шт"
 
     def product_price(self):
         return round(self.product.sell_price() * self.quantity, 2)

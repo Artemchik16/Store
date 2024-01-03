@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import FormView, TemplateView
 
+from carts.models import Cart
 from users.forms import LoginForm, ProfileForm, RegistrationForm
 
 
@@ -39,15 +40,34 @@ class ProfilePage(View):
             return render(request, template_name=self.template_name, context=context)
 
 
-class LoginPage(LoginView):
-    template_name = "users/login.html"
-    form_class = LoginForm
+class LoginPage(View):
 
-    def form_valid(self, form):
-        messages.success(self.request, f"Добро пожаловть!")
-        return super().form_valid(form)
+    def get(self, request, *args, **kwargs):
+        form = LoginForm()
+        return render(request, 'users/login.html', context={'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            session_key = request.session.session_key
+            if user:
+                login(request, user)
+                messages.success(self.request, f"{username} Добро пожаловать!")
+
+                if session_key:
+                    Cart.objects.filter(session_key=session_key).update(user=user)
+                return HttpResponseRedirect(reverse('users:profile'))
+            else:
+                messages.error(self.request, "Неверное имя пользователя или пароль.")
+                return render(request, 'users/login.html', context={'form': form})
+        else:
+            return render(request, 'users/login.html', context={'form': form})
 
 
+@method_decorator(login_required, name="dispatch")
 class LogoutPage(View):
     def get(self, request, *args, **kwargs):
         username = request.user.username
