@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -94,6 +95,9 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('goods:product_page', kwargs={'product_slug': self.slug})
 
     def display_id(self):
         return f"{self.pk:05}"
