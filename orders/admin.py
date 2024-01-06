@@ -1,13 +1,11 @@
-from django.contrib import admin
-
 # Register your models here.
 from django.contrib import admin
 
 from orders.models import Order, OrderItem
 
-
 # admin.site.register(Order)
 # admin.site.register(OrderItem)
+
 
 class OrderItemTabulareAdmin(admin.TabularInline):
     model = OrderItem
@@ -61,10 +59,8 @@ class OrderAdmin(admin.ModelAdmin):
         "created_timestamp",
     )
 
-    search_fields = (
-        "id",
-    )
-    list_editable = ('status',)
+    search_fields = ("id",)
+    list_editable = ("status",)
     readonly_fields = ("created_timestamp",)
     list_filter = (
         "requires_delivery",

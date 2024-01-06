@@ -9,6 +9,10 @@ djangorestframework-simplejwt
 djoser==2.1.0
 drf-spectacular==0.25.1
 django-debug-toolbar
+
+aiogram==2.25.1
+requests
+
 black
 isort
 pillow

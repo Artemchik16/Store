@@ -48,6 +48,8 @@ INSTALLED_APPS += [
 
 #  other apps
 INSTALLED_APPS += [
+    "rest_framework",
+    "django_filters",
     "debug_toolbar",
 ]
 
@@ -153,31 +155,38 @@ JAZZMIN_UI_TWEAKS = {
     "theme": "litera",
 }
 
-# JAZZMIN_SETTINGS = {
-#     "topmenu_links": [
-#         {
-#             "name": "Админ-панель",
-#             "url": "admin:index",
-#             "permissions": ["auth.view_user"],
-#         },
-#         {
-#             "name": "Главная",
-#             "url": "main:main_page",
-#             "new_window": True,
-#             "permissions": ["auth.view_user"],
-#         },
-#         {
-#             "name": "Партнерка",
-#             "url": "partner:partner_page",
-#             "new_window": True,
-#             "permissions": ["auth.view_user"],
-#         },
-#     ],
-#     "usermenu_links": [
-#         {
-#             "name": "Открыть сайт",
-#             "url": "main:main_page",
-#             "permissions": ["auth.view_user"],
-#         },
-#     ],
-# }
+JAZZMIN_SETTINGS = {
+    "topmenu_links": [
+        {
+            "name": "Админ-панель",
+            "url": "admin:index",
+            "permissions": ["auth.view_user"],
+        },
+        {
+            "name": "Главная",
+            "url": "main:main_page",
+            "new_window": True,
+            "permissions": ["auth.view_user"],
+        },
+        {
+            "name": "Профиль",
+            "url": "users:profile",
+            "new_window": True,
+            "permissions": ["auth.view_user"],
+        },
+        {
+            "name": "Каталог",
+            "url": "goods:catalog_page",
+            "new_window": True,
+            "permissions": ["auth.view_user"],
+        },
+    ],
+    "usermenu_links": [
+        {
+            "name": "Открыть сайт",
+            "url": "main:main_page",
+            "new_window": True,
+            "permissions": ["auth.view_user"],
+        },
+    ],
+}

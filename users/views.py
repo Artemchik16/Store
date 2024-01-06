@@ -21,13 +21,19 @@ class ProfilePage(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-
-            orders = Order.objects.filter(user=request.user).prefetch_related(
-                Prefetch('orderitem_set', queryset=OrderItem.objects.select_related('product'))).order_by(
-                '-created_timestamp')
+            orders = (
+                Order.objects.filter(user=request.user)
+                .prefetch_related(
+                    Prefetch(
+                        "orderitem_set",
+                        queryset=OrderItem.objects.select_related("product"),
+                    )
+                )
+                .order_by("-created_timestamp")
+            )
 
             form = ProfileForm(instance=request.user)
-            context = {"form": form, 'orders': orders}
+            context = {"form": form, "orders": orders}
             return render(request, template_name=self.template_name, context=context)
         # else:
         #     return redirect("users:login")
