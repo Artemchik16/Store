@@ -51,6 +51,8 @@ INSTALLED_APPS += [
     "rest_framework",
     "django_filters",
     "debug_toolbar",
+
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -190,3 +192,54 @@ JAZZMIN_SETTINGS = {
         },
     ],
 }
+
+###########################
+# SPECTACULAR CONFIG
+###########################
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Shopy Shop",
+    "DESCRIPTION": "Shopy Shop Documentation",
+    "VERSION": "1.0.0",
+    "SERVE_PERMISSIONS": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "SERVE_AUTHENTICATION": [
+        "rest_framework.authentication.BasicAuthentication",
+    ],
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "displayOperationId": True,
+        "syntaxHighlight.active": True,
+        "syntaxHighlight.theme": "arta",
+        "defaultModelsExpandDepth": -1,
+        "displayRequestDuration": True,
+        "filter": True,
+        "requestSnippetsEnabled": True,
+    },
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SORT_OPERATIONS": False,
+    "ENABLE_DJANGO_DEPLOY_CHECK": False,
+    "DISABLE_ERRORS_AND_WARNINGS": True,
+}
+###########################
+
+###########################
+# DJANGO REST FRAMEWORK
+###########################
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.FormParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FileUploadParser",
+    ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "api_v1.pagination.BasePagination",
+}
+###########################

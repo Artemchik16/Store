@@ -1,4 +1,5 @@
 from django.urls import include, path
+from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 
 from api_v1.views import categories_view, products_view
@@ -14,4 +15,6 @@ products_router.register(r"products", products_view.ProductsAPIView)
 urlpatterns = [
     path("v1/", include(categories_router.urls)),
     path("v1/", include(products_router.urls)),
+    # documentation
+    path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]

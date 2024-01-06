@@ -30,11 +30,11 @@ async def get_categories(message: types.Message):
 async def get_categories(message: types.Message):
     for line in config.products_list():
         answer = ""
-        answer += "Название" + ' ' + str(line.get("name")) + "\n"
-        answer += "Категория" + ' ' + str(line.get("category")) + "\n"
+        answer += "Название" + " " + str(line.get("name")) + "\n"
+        answer += "Категория" + " " + str(line.get("category")) + "\n"
         answer += str(line.get("description")) + "\n"
         answer += str(line.get("sell_price")) + "\n"
-        answer += "Количество" + ' ' + str(line.get("quantity")) + "\n"
+        answer += "Количество" + " " + str(line.get("quantity")) + "\n"
         await message.reply(answer)
 
 
